@@ -61,10 +61,10 @@ function LoginScreen({ onLogin, loading, error }) {
             </>
           ) : (
             <>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
               </svg>
-              Sign in with Ethos
+              Sign in with X
             </>
           )}
         </button>
@@ -80,7 +80,7 @@ function LoginScreen({ onLogin, loading, error }) {
           maxWidth: 320, margin: "20px auto 0",
         }}>
           <p style={{ color: "#6b7280", fontSize: 11, margin: 0, lineHeight: 1.6 }}>
-            🔒 Secure cross-app authentication. Your Ethos identity is verified cryptographically — no password needed.
+            🔒 Sign in with your X account. Your Ethos reputation is linked to your X identity.
           </p>
         </div>
 

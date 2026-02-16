@@ -32,8 +32,7 @@ VITE_PRIVY_APP_ID=your-actual-privy-app-id</pre>
             accentColor: "#22c55e",
             logo: null,
           },
-          // Ethos login is enabled via Privy Dashboard (Integrations → Ethos Network)
-          // No need to configure loginMethods here — Ethos shows as cross-app provider
+          loginMethods: ["twitter"],
         }}
       >
         <App />
