@@ -39,6 +39,8 @@ export async function fetchUserByX(xUsername) {
   });
   if (!res.ok) throw new Error(`Ethos API error: ${res.status}`);
   const data = await res.json();
+  // API returns a direct array of user objects
+  if (Array.isArray(data) && data.length > 0) return data[0];
   if (data.users && data.users.length > 0) return data.users[0];
   throw new Error("NOT_FOUND");
 }
