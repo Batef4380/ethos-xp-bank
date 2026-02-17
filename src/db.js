@@ -1,9 +1,14 @@
 import { supabase } from "./supabase";
 
+function requireSupabase() {
+  if (!supabase) throw new Error("Supabase not configured");
+  return supabase;
+}
+
 // ── Offers ──────────────────────────────────────
 
 export async function fetchOffers() {
-  const { data, error } = await supabase
+  const { data, error } = await requireSupabase()
     .from("offers")
     .select("*")
     .order("created_at", { ascending: false });
@@ -12,7 +17,7 @@ export async function fetchOffers() {
 }
 
 export async function createOffer({ username, displayName, avatarUrl, score, amount, durationDays }) {
-  const { data, error } = await supabase
+  const { data, error } = await requireSupabase()
     .from("offers")
     .insert({
       username,
@@ -30,7 +35,7 @@ export async function createOffer({ username, displayName, avatarUrl, score, amo
 }
 
 export async function borrowOffer(offerId, borrowerUsername) {
-  const { error } = await supabase
+  const { error } = await requireSupabase()
     .from("offers")
     .update({ is_open: false, borrower_username: borrowerUsername })
     .eq("id", offerId);
@@ -40,7 +45,7 @@ export async function borrowOffer(offerId, borrowerUsername) {
 // ── Loans ───────────────────────────────────────
 
 export async function fetchLoans(username) {
-  const { data, error } = await supabase
+  const { data, error } = await requireSupabase()
     .from("loans")
     .select("*")
     .or(`lender_username.eq.${username},borrower_username.eq.${username}`)
@@ -50,7 +55,7 @@ export async function fetchLoans(username) {
 }
 
 export async function createLoan({ offerId, lenderUsername, lenderDisplayName, lenderAvatarUrl, lenderScore, borrowerUsername, borrowerDisplayName, borrowerAvatarUrl, borrowerScore, amount, dueDate }) {
-  const { data, error } = await supabase
+  const { data, error } = await requireSupabase()
     .from("loans")
     .insert({
       offer_id: offerId,
@@ -73,7 +78,7 @@ export async function createLoan({ offerId, lenderUsername, lenderDisplayName, l
 }
 
 export async function repayLoan(loanId) {
-  const { error } = await supabase
+  const { error } = await requireSupabase()
     .from("loans")
     .update({ is_repaid: true })
     .eq("id", loanId);
