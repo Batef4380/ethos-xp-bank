@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useEthosUser } from "./useEthosUser";
 import { getTier, fmtNum, TIERS, ethosProfileUrl, ethosReviewUrl } from "./ethos";
 import {
   AvatarRing, TierBadge, SlashBadge, Stat, Overlay,
   lbl, inp, btnGreen, btnGreenFull, btnOutline,
 } from "./components";
+import {
+  fetchOffers as dbFetchOffers,
+  createOffer as dbCreateOffer,
+  borrowOffer as dbBorrowOffer,
+  fetchLoans as dbFetchLoans,
+  createLoan as dbCreateLoan,
+  repayLoan as dbRepayLoan,
+} from "./db";
 
 // ═══════════════════════════════════════════
 //  LOGIN SCREEN
@@ -30,7 +38,7 @@ function LoginScreen({ onLogin, loading, error }) {
           Ethos XP Bank
         </h1>
         <p style={{ color: "#6b7280", fontSize: 14, lineHeight: 1.6, marginBottom: 30 }}>
-          Reputation-backed XP lending. No interest. Built on trust.
+          Reputation-backed XP lending. 0% interest. Built on trust.
         </p>
 
         {error && (
@@ -243,7 +251,7 @@ function BorrowModal({ open, close, offer, onConfirm }) {
   return (
     <Overlay open={open} close={close}>
       <h3 style={{ color: "#fff", fontSize: 18, fontWeight: 700, marginBottom: 3, fontFamily: "mono" }}>Confirm Borrow</h3>
-      <p style={{ color: "#6b7280", fontSize: 12, marginBottom: 20 }}>No interest — repay what you borrow</p>
+      <p style={{ color: "#6b7280", fontSize: 12, marginBottom: 20 }}>0% interest — repay what you borrow</p>
       <div style={{ background: "#0a0a14", borderRadius: 12, padding: 18, border: "1px solid #1c1c32", marginBottom: 18 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, paddingBottom: 12, borderBottom: "1px solid #1c1c32" }}>
           <AvatarRing score={offer.score || 0} size={42} src={offer.avatarUrl}>{(offer.displayName || "?")[0]}</AvatarRing>
@@ -255,7 +263,7 @@ function BorrowModal({ open, close, offer, onConfirm }) {
         {[
           ["Borrow Amount", offer.amt + " XP", "#fff"],
           ["Repay Amount", offer.amt + " XP", "#22c55e"],
-          ["Interest", "0 (Free!)", "#4ade80"],
+          ["Interest", "0% interest", "#4ade80"],
           ["Duration", offer.dur + " days", "#fff"],
         ].map(([l, v, c], i) => (
           <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0" }}>
@@ -281,7 +289,7 @@ function LendModal({ open, close, onConfirm }) {
   return (
     <Overlay open={open} close={close}>
       <h3 style={{ color: "#fff", fontSize: 18, fontWeight: 700, marginBottom: 3, fontFamily: "mono" }}>Create Lending Offer</h3>
-      <p style={{ color: "#6b7280", fontSize: 12, marginBottom: 20 }}>No interest — help the community</p>
+      <p style={{ color: "#6b7280", fontSize: 12, marginBottom: 20 }}>0% interest — help the community</p>
       <label style={lbl}>XP Amount</label>
       <input type="number" value={amt} onChange={e => setAmt(e.target.value)} placeholder="Enter XP amount" style={inp} />
       <div style={{ marginTop: 14 }}>
@@ -290,7 +298,7 @@ function LendModal({ open, close, onConfirm }) {
       </div>
       {a > 0 && (
         <div style={{ background: "#0a0a14", borderRadius: 10, padding: 14, marginTop: 16, border: "1px solid #1c1c32" }}>
-          {[["You lend", a + " XP", "#fff"], ["You get back", a + " XP", "#22c55e"], ["Interest", "0 XP (Free!)", "#4ade80"]].map(([l, v, c], i) => (
+          {[["You lend", a + " XP", "#fff"], ["You get back", a + " XP", "#22c55e"], ["Interest", "0% interest", "#4ade80"]].map(([l, v, c], i) => (
             <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>
               <span style={{ color: "#6b7280", fontSize: 12 }}>{l}</span>
               <span style={{ color: c, fontSize: 13, fontWeight: 600, fontFamily: "mono" }}>{v}</span>
@@ -333,7 +341,7 @@ function OfferCard({ o, onBorrow, canBorrow }) {
         {!o.open && <span style={{ fontSize: 10, color: "#6b7280", background: "#1a1a2e", padding: "3px 8px", borderRadius: 12, textTransform: "uppercase" }}>Taken</span>}
       </div>
       <div style={{ display: "flex", gap: 14, marginBottom: 14 }}>
-        {[{ l: "Amount", v: o.amt + " XP" }, { l: "Interest", v: "Free", c: "#4ade80" }, { l: "Duration", v: o.dur + "d" }].map((x, i) => (
+        {[{ l: "Amount", v: o.amt + " XP" }, { l: "Interest", v: "0%", c: "#4ade80" }, { l: "Duration", v: o.dur + "d" }].map((x, i) => (
           <div key={i} style={{ flex: 1 }}>
             <div style={{ fontSize: 10, color: "#6b7280", textTransform: "uppercase", letterSpacing: 0.8, marginBottom: 3 }}>{x.l}</div>
             <div style={{ fontSize: 18, fontWeight: 700, color: x.c || "#fff", fontFamily: "mono" }}>{x.v}</div>
@@ -397,6 +405,39 @@ export default function App() {
   const [offers, setOffers] = useState([]);
   const [loans, setLoans] = useState([]);
 
+  const refreshOffers = useCallback(async () => {
+    try {
+      const rows = await dbFetchOffers();
+      setOffers(rows.map(r => ({
+        id: r.id, username: r.username, displayName: r.display_name,
+        avatarUrl: r.avatar_url, score: r.score, amt: r.amount,
+        dur: r.duration_days, open: r.is_open,
+      })));
+    } catch (e) { console.error("fetchOffers:", e); }
+  }, []);
+
+  const refreshLoans = useCallback(async (user) => {
+    try {
+      const rows = await dbFetchLoans(user);
+      setLoans(rows.filter(r => !r.is_repaid).map(r => ({
+        id: r.id, offerId: r.offer_id,
+        username: r.lender_username === user ? r.borrower_username : r.lender_username,
+        displayName: r.lender_username === user ? r.borrower_display_name : r.lender_display_name,
+        avatarUrl: r.lender_username === user ? r.borrower_avatar_url : r.lender_avatar_url,
+        score: r.lender_username === user ? r.borrower_score : r.lender_score,
+        type: r.lender_username === user ? "lent" : "borrowed",
+        amt: r.amount, due: r.due_date,
+      })));
+    } catch (e) { console.error("fetchLoans:", e); }
+  }, []);
+
+  useEffect(() => {
+    if (!authenticated || !ethosUser) return;
+    refreshOffers();
+    const u = ethosUser.username || "";
+    if (u) refreshLoans(u);
+  }, [authenticated, ethosUser, refreshOffers, refreshLoans]);
+
   // Show login if not authenticated or Ethos profile not loaded
   if (!ready) {
     return (
@@ -421,26 +462,45 @@ export default function App() {
   const avatarUrl = ethosUser.avatarUrl;
   const username = ethosUser.username || "";
 
-  function handleBorrowConfirm(offer) {
+  async function handleBorrowConfirm(offer) {
     setBorrowOffer(null);
-    setLoans(prev => [...prev, {
-      id: Date.now(), username: offer.username, displayName: offer.displayName,
-      avatarUrl: offer.avatarUrl, score: offer.score,
-      type: "borrowed", amt: offer.amt,
-      due: new Date(Date.now() + offer.dur * 864e5).toISOString().split("T")[0],
-    }]);
-    setOffers(prev => prev.map(o => o.id === offer.id ? { ...o, open: false } : o));
+    try {
+      const dueDate = new Date(Date.now() + offer.dur * 864e5).toISOString().split("T")[0];
+      await dbBorrowOffer(offer.id, username);
+      await dbCreateLoan({
+        offerId: offer.id,
+        lenderUsername: offer.username,
+        lenderDisplayName: offer.displayName,
+        lenderAvatarUrl: offer.avatarUrl,
+        lenderScore: offer.score,
+        borrowerUsername: username,
+        borrowerDisplayName: displayName,
+        borrowerAvatarUrl: avatarUrl,
+        borrowerScore: score,
+        amount: offer.amt,
+        dueDate,
+      });
+      await refreshOffers();
+      await refreshLoans(username);
+    } catch (e) { console.error("handleBorrowConfirm:", e); }
   }
 
-  function handleLendConfirm({ amt, dur }) {
+  async function handleLendConfirm({ amt, dur }) {
     setLendOpen(false);
-    setOffers(prev => [...prev, {
-      id: Date.now(), username, displayName, avatarUrl, score, amt, dur, open: true,
-    }]);
+    try {
+      await dbCreateOffer({
+        username, displayName, avatarUrl, score,
+        amount: amt, durationDays: dur,
+      });
+      await refreshOffers();
+    } catch (e) { console.error("handleLendConfirm:", e); }
   }
 
-  function handleRepay(loan) {
-    setLoans(prev => prev.filter(l => l.id !== loan.id));
+  async function handleRepay(loan) {
+    try {
+      await dbRepayLoan(loan.id);
+      await refreshLoans(username);
+    } catch (e) { console.error("handleRepay:", e); }
     const cp = { username: loan.username, displayName: loan.displayName, avatarUrl: loan.avatarUrl, score: loan.score };
     setRepaidLoan(cp);
     setTimeout(() => setGiftTarget(cp), 400);
@@ -567,7 +627,7 @@ export default function App() {
             )}
             <div style={{ background: "linear-gradient(145deg, #131320, #0c0c18)", border: "1px solid #1c1c32", borderRadius: 16, padding: 22 }}>
               <h3 style={{ color: "#fff", fontSize: 14, fontWeight: 700, marginBottom: 6 }}>Tier Borrow Limits</h3>
-              <p style={{ color: "#6b7280", fontSize: 12, marginBottom: 16 }}>Each tier unlocks +1,000 XP. No interest.</p>
+              <p style={{ color: "#6b7280", fontSize: 12, marginBottom: 16 }}>Each tier unlocks +1,000 XP. 0% interest.</p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(95px, 1fr))", gap: 8 }}>
                 {TIERS.map(t => {
                   const cur = score >= t.min && score <= t.max;
@@ -594,7 +654,7 @@ export default function App() {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22, flexWrap: "wrap", gap: 10 }}>
               <div>
                 <h2 style={{ fontSize: 20, fontWeight: 700, fontFamily: "'Space Mono', monospace", marginBottom: 3 }}>XP Lending Market</h2>
-                <p style={{ color: "#6b7280", fontSize: 13 }}>Borrow XP for free</p>
+                <p style={{ color: "#6b7280", fontSize: 13 }}>Borrow XP at 0% interest</p>
               </div>
               <button onClick={() => setLendOpen(true)} style={{
                 padding: "11px 22px", background: "linear-gradient(135deg, #22c55e, #10b981)",
@@ -605,7 +665,7 @@ export default function App() {
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 22 }}>
               <Stat icon="📊" label="Available" value={offers.filter(o => o.open).length} />
               <Stat icon="🎯" label="Your Limit" value={fmtNum(limit) + " XP"} />
-              <Stat icon="🤝" label="Interest" value="0%" sub="Always free" />
+              <Stat icon="🤝" label="Interest" value="0%" sub="Always 0%" />
             </div>
             {offers.length > 0 ? (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: 14 }}>
