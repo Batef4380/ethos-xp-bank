@@ -64,7 +64,7 @@ export function Overlay({ open, close, children }) {
   return (
     <div style={{
       position: "fixed", inset: 0, zIndex: 1000,
-      background: "rgba(0,0,0,0.72)", backdropFilter: "blur(8px)",
+      background: "rgba(0,0,0,0.78)", backdropFilter: "blur(14px)",
       display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
     }} onClick={close}>
       <div onClick={e => e.stopPropagation()} style={{
