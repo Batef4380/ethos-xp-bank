@@ -85,12 +85,12 @@ export const inp = {
 };
 export const btnGreen = {
   padding: "12px 28px", background: "linear-gradient(135deg, #22c55e, #10b981)",
-  color: "#0a0a0f", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700,
+  color: "#0a0a0f", border: "none", borderRadius: 16, fontSize: 13, fontWeight: 700,
   cursor: "pointer", textTransform: "uppercase", letterSpacing: 1,
 };
 export const btnGreenFull = { ...btnGreen, width: "100%", padding: "13px 0" };
 export const btnOutline = {
   flex: 1, padding: "12px 0", background: "transparent",
-  border: "1px solid #1c1c32", borderRadius: 12,
+  border: "1px solid #1c1c32", borderRadius: 16,
   color: "#6b7280", fontSize: 13, fontWeight: 600, cursor: "pointer",
 };
