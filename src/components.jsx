@@ -49,9 +49,11 @@ export function SlashBadge({ count }) {
 export function Stat({ icon, label, value, sub }) {
   return (
     <div style={{
-      background: "linear-gradient(145deg, #131320, #0c0c18)",
-      border: "1px solid #1c1c32", borderRadius: 14,
-      padding: "16px 18px", flex: "1 1 155px", minWidth: 155,
+      background: "linear-gradient(145deg, #10101e, #0a0a16)",
+      border: "1px solid #1a1a2e",
+      borderTop: "1px solid #22223a",
+      borderRadius: 16,
+      padding: "18px 20px", flex: "1 1 155px", minWidth: 155,
     }}>
       <div style={{ fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 10 }}>{icon} {label}</div>
       <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", fontFamily: "'Space Mono', monospace" }}>{value}</div>
