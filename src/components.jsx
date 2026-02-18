@@ -84,7 +84,7 @@ export function Overlay({ open, close, children }) {
 }
 
 // Shared styles
-export const lbl = { fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: 1, display: "block", marginBottom: 6 };
+export const lbl = { fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: 1.4, fontWeight: 600, display: "block", marginBottom: 7 };
 export const inp = {
   width: "100%", padding: "12px 16px", background: "#0a0a14",
   border: "1px solid #1c1c32", borderRadius: 12, color: "#fff",
