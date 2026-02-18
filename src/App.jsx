@@ -597,11 +597,11 @@ export default function App() {
       {/* CONTENT */}
       <main style={{ maxWidth: 960, margin: "0 auto", padding: "22px 20px", animation: "fadeUp 0.5s ease" }}>
         {!eligible && (
-          <div style={{ background: "#dc262612", border: "1px solid #dc262630", borderRadius: 14, padding: "18px 22px", marginBottom: 22, display: "flex", alignItems: "center", gap: 14 }}>
-            <span style={{ fontSize: 28 }}>🔒</span>
+          <div style={{ background: "#0f0a0a", border: "1px solid #3f1515", borderRadius: 14, padding: "16px 20px", marginBottom: 22, display: "flex", alignItems: "center", gap: 14 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: "#7f1d1d20", border: "1px solid #7f1d1d40", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 16 }}>🔒</div>
             <div>
-              <div style={{ color: "#fca5a5", fontSize: 14, fontWeight: 700 }}>Borrowing Locked</div>
-              <div style={{ color: "#a3a3a3", fontSize: 12 }}>Your score ({score}) is below 800. Build reputation on Ethos.</div>
+              <div style={{ color: "#f87171", fontSize: 13, fontWeight: 600, marginBottom: 3 }}>Borrowing Locked</div>
+              <div style={{ color: "#6b7280", fontSize: 12 }}>Your score ({score}) is below 800. Build reputation on Ethos to unlock borrowing.</div>
             </div>
           </div>
         )}
