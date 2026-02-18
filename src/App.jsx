@@ -609,19 +609,19 @@ export default function App() {
         {/* DASHBOARD */}
         {tab === "dashboard" && (
           <>
-            <div style={{ display: "flex", alignItems: "center", gap: 22, marginBottom: 28, flexWrap: "wrap" }}>
-              <AvatarRing score={score} size={72} src={avatarUrl}>{displayName[0]}</AvatarRing>
+            <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 28, flexWrap: "wrap" }}>
+              <AvatarRing score={score} size={68} src={avatarUrl}>{displayName[0]}</AvatarRing>
               <div>
-                <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 4, fontFamily: "'Space Mono', monospace" }}>{displayName}</h2>
-                <p style={{ color: "#6b7280", fontSize: 13, marginBottom: 10 }}>@{username} on Ethos Network</p>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-                  <span style={{ background: `${tier.color}15`, border: `1px solid ${tier.color}30`, borderRadius: 8, padding: "5px 12px", color: tier.color, fontSize: 13, fontWeight: 600 }}>
-                    Borrow Limit: {fmtNum(limit)} XP
+                <h2 style={{ fontSize: 19, fontWeight: 700, marginBottom: 2, fontFamily: "'Space Mono', monospace", letterSpacing: -0.5 }}>{displayName}</h2>
+                <p style={{ color: "#6b7280", fontSize: 12, marginBottom: 10, letterSpacing: 0.2 }}>@{username} · Ethos Network</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                  <span style={{ background: `${tier.color}12`, border: `1px solid ${tier.color}25`, borderRadius: 8, padding: "5px 12px", color: tier.color, fontSize: 12, fontWeight: 600, letterSpacing: 0.3 }}>
+                    {fmtNum(limit)} XP limit
                   </span>
                   <a href={ethosProfileUrl(username)} target="_blank" rel="noopener noreferrer" style={{
-                    display: "inline-flex", alignItems: "center", gap: 5, background: "#1c1c32", border: "1px solid #2a2a44",
-                    borderRadius: 8, padding: "5px 12px", color: "#a3a3a3", fontSize: 12, textDecoration: "none",
-                  }}>View on Ethos ↗</a>
+                    display: "inline-flex", alignItems: "center", gap: 5, background: "#111120", border: "1px solid #1e1e32",
+                    borderRadius: 8, padding: "5px 12px", color: "#9ca3af", fontSize: 12, textDecoration: "none", letterSpacing: 0.2,
+                  }}>Ethos profile ↗</a>
                 </div>
               </div>
             </div>
