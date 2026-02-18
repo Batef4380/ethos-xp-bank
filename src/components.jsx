@@ -52,9 +52,9 @@ export function Stat({ icon, label, value, sub }) {
       border: "1px solid #1c1c32", borderRadius: 14,
       padding: "16px 18px", flex: "1 1 155px", minWidth: 155,
     }}>
-      <div style={{ fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: 1.1, marginBottom: 8 }}>{icon} {label}</div>
-      <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", fontFamily: "mono" }}>{value}</div>
-      {sub && <div style={{ fontSize: 11, color: "#4ade80", marginTop: 4 }}>{sub}</div>}
+      <div style={{ fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 10 }}>{icon} {label}</div>
+      <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", fontFamily: "'Space Mono', monospace" }}>{value}</div>
+      {sub && <div style={{ fontSize: 11, color: "#4ade80", marginTop: 6 }}>{sub}</div>}
     </div>
   );
 }
