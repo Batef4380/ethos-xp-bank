@@ -6,10 +6,11 @@ export function AvatarRing({ children, score, size = 44, src }) {
   return (
     <div style={{
       width: size, height: size, borderRadius: "50%",
-      border: `${size > 50 ? 4 : 3}px solid ${t.color}`,
-      background: "#111120", display: "flex", alignItems: "center", justifyContent: "center",
-      fontSize: size * 0.44, flexShrink: 0, boxShadow: `0 0 14px ${t.color}30`,
-      overflow: "hidden",
+      border: `${size > 50 ? 3 : 2}px solid ${t.color}60`,
+      background: "#0d0d1a", display: "flex", alignItems: "center", justifyContent: "center",
+      fontSize: size * 0.44, flexShrink: 0,
+      boxShadow: `0 0 0 1px ${t.color}20, 0 0 18px ${t.color}22`,
+      overflow: "hidden", transition: "box-shadow 0.3s ease",
     }}>
       {src ? (
         <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
