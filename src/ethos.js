@@ -97,6 +97,12 @@ export function fmtNum(n) {
   return String(n);
 }
 
+/** Return the maximum XP a user can borrow based on their score. */
+export function calcMaxLoan(score) {
+  const tier = getTier(score);
+  return tier.limit;
+}
+
 /** Format loan duration in days to a human-readable string. */
 export function fmtDuration(days) {
   if (days === 1) return "1 day";
