@@ -542,7 +542,7 @@ export default function App() {
   ];
 
   return (
-    <div style={{ minHeight: "100vh", background: "#08080f", color: "#fff", fontFamily: "'DM Sans', -apple-system, sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#08080f", color: "#f9fafb", fontFamily: "'Inter', -apple-system, sans-serif" }}>
       {/* HEADER */}
       <header style={{
         padding: "13px 24px", borderBottom: "1px solid #1a1a2e",
