@@ -545,9 +545,10 @@ export default function App() {
     <div style={{ minHeight: "100vh", background: "#08080f", color: "#fff", fontFamily: "'DM Sans', -apple-system, sans-serif" }}>
       {/* HEADER */}
       <header style={{
-        padding: "14px 22px", borderBottom: "1px solid #1c1c32",
+        padding: "13px 24px", borderBottom: "1px solid #1a1a2e",
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        background: "linear-gradient(180deg, #0c0c18, #08080f)",
+        background: "rgba(8,8,15,0.85)", backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
         position: "sticky", top: 0, zIndex: 100, flexWrap: "wrap", gap: 10,
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
