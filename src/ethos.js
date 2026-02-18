@@ -96,3 +96,11 @@ export function fmtNum(n) {
   if (n >= 1000) return (n / 1000).toFixed(1) + "K";
   return String(n);
 }
+
+/** Format loan duration in days to a human-readable string. */
+export function fmtDuration(days) {
+  if (days === 1) return "1 day";
+  if (days < 7) return `${days} days`;
+  if (days % 7 === 0) return `${days / 7}w`;
+  return `${days}d`;
+}
