@@ -22,9 +22,9 @@ export function TierBadge({ score, name }) {
   const t = getTier(score);
   const inner = (
     <span style={{
-      fontSize: 11, fontWeight: 600, color: t.color,
+      fontSize: 12, fontWeight: 600, color: t.color,
       background: `${t.color}15`, border: `1px solid ${t.color}30`,
-      borderRadius: 6, padding: "2px 8px",
+      borderRadius: 8, padding: "3px 10px", letterSpacing: 0.3,
       cursor: name ? "pointer" : "default", transition: "all 0.2s",
     }}>{t.name} · {score}</span>
   );
