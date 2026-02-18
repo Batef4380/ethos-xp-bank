@@ -536,9 +536,9 @@ export default function App() {
   }
 
   const navItems = [
-    { id: "market", icon: "📊", label: "Market" },
-    { id: "loans", icon: "📋", label: "My Loans" },
-    { id: "dashboard", icon: "👤", label: "Dashboard" },
+    { id: "market", label: "Market" },
+    { id: "loans", label: "My Loans" },
+    { id: "dashboard", label: "Dashboard" },
   ];
 
   return (
@@ -574,16 +574,17 @@ export default function App() {
       </header>
 
       {/* NAV */}
-      <nav style={{ padding: "10px 22px", display: "flex", gap: 6, borderBottom: "1px solid #1c1c3210", overflowX: "auto" }}>
+      <nav style={{ padding: "0 24px", display: "flex", gap: 2, borderBottom: "1px solid #141428", overflowX: "auto" }}>
         {navItems.map(n => (
           <button key={n.id} onClick={() => setTab(n.id)} style={{
-            padding: "9px 18px",
-            background: tab === n.id ? `${tier.color}12` : "transparent",
-            border: tab === n.id ? `1px solid ${tier.color}30` : "1px solid transparent",
-            borderRadius: 9, color: tab === n.id ? tier.color : "#6b7280",
-            fontSize: 13, fontWeight: tab === n.id ? 700 : 500, cursor: "pointer", transition: "all 0.2s",
-            display: "flex", alignItems: "center", gap: 7, whiteSpace: "nowrap",
-          }}><span style={{ fontSize: 15 }}>{n.icon}</span>{n.label}</button>
+            padding: "13px 18px",
+            background: "transparent",
+            border: "none",
+            borderBottom: tab === n.id ? `2px solid ${tier.color}` : "2px solid transparent",
+            color: tab === n.id ? "#f9fafb" : "#6b7280",
+            fontSize: 13, fontWeight: tab === n.id ? 600 : 400, cursor: "pointer",
+            transition: "all 0.2s", whiteSpace: "nowrap", marginBottom: -1,
+          }}>{n.label}</button>
         ))}
         <button onClick={logout} style={{
           marginLeft: "auto", padding: "7px 14px",
