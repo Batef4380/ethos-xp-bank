@@ -55,6 +55,18 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173)
 
+## Deploy to Netlify
+
+The repo includes a `netlify.toml` with the correct build settings.
+
+1. Push to GitHub
+2. Import the repo at [app.netlify.com](https://app.netlify.com)
+3. In **Site settings → Environment variables**, add:
+   - `VITE_PRIVY_APP_ID`
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+4. Trigger a deploy — Netlify will run `vite build` automatically
+
 ## Deploy to Vercel
 
 ```bash
