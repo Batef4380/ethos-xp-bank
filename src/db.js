@@ -42,6 +42,14 @@ export async function borrowOffer(offerId, borrowerUsername) {
   if (error) throw error;
 }
 
+export async function cancelOffer(offerId) {
+  const { error } = await requireSupabase()
+    .from("offers")
+    .delete()
+    .eq("id", offerId);
+  if (error) throw error;
+}
+
 // ── Loans ───────────────────────────────────────
 
 export async function fetchLoans(username) {
