@@ -68,6 +68,29 @@ export function getTier(score) {
   return TIERS[0];
 }
 
+/**
+ * Send XP tip from authenticated user to another user.
+ * @param {string} accessToken - Privy Bearer token
+ * @param {string} receiverUserkey - Recipient userkey (e.g. "x:username")
+ * @param {number} amount - XP amount to send
+ */
+export async function tipXP(accessToken, receiverUserkey, amount) {
+  const res = await fetch(`${ETHOS_API}/xp/tip`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${accessToken}`,
+      "X-Ethos-Client": ETHOS_CLIENT,
+    },
+    body: JSON.stringify({ receiverUserkey, amount }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `XP tip failed: ${res.status}`);
+  }
+  return res.json();
+}
+
 export function fmtNum(n) {
   if (n >= 1000000) return (n / 1000000).toFixed(1) + "M";
   if (n >= 1000) return (n / 1000).toFixed(1) + "K";

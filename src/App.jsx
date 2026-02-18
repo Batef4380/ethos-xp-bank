@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useEthosUser } from "./useEthosUser";
-import { getTier, fmtNum, TIERS, ethosProfileUrl, ethosReviewUrl } from "./ethos";
+import { getTier, fmtNum, TIERS, ethosProfileUrl, ethosReviewUrl, tipXP } from "./ethos";
 import {
   AvatarRing, TierBadge, SlashBadge, Stat, Overlay,
   lbl, inp, btnGreen, btnGreenFull, btnOutline,
@@ -360,7 +360,7 @@ function OfferCard({ o, onBorrow, canBorrow }) {
   );
 }
 
-function LoanRow({ l, onRepay }) {
+function LoanRow({ l, onRepay, onSendXP }) {
   const isLent = l.type === "lent";
   const left = Math.max(0, Math.ceil((new Date(l.due) - new Date()) / 864e5));
   return (
@@ -383,6 +383,10 @@ function LoanRow({ l, onRepay }) {
           <div style={{ fontSize: 15, fontWeight: 700, color: x.c, fontFamily: "mono" }}>{x.v}</div>
         </div>
       ))}
+      {isLent && onSendXP && <button onClick={() => onSendXP(l)} style={{
+        padding: "7px 18px", background: "linear-gradient(135deg, #8b5cf6, #7c3aed)",
+        color: "#fff", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer", textTransform: "uppercase",
+      }}>Send XP</button>}
       {!isLent && <button onClick={() => onRepay(l)} style={{
         padding: "7px 18px", background: "linear-gradient(135deg, #22c55e, #10b981)",
         color: "#0a0a0f", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer", textTransform: "uppercase",
@@ -395,7 +399,7 @@ function LoanRow({ l, onRepay }) {
 //  MAIN APP
 // ═══════════════════════════════════════════
 export default function App() {
-  const { ready, authenticated, ethosUser, loading, error, login, logout } = useEthosUser();
+  const { ready, authenticated, ethosUser, loading, error, login, logout, getAccessToken } = useEthosUser();
   const [tab, setTab] = useState("market");
   const [lendOpen, setLendOpen] = useState(false);
   const [borrowOffer, setBorrowOffer] = useState(null);
@@ -498,12 +502,30 @@ export default function App() {
 
   async function handleRepay(loan) {
     try {
+      // Send XP back to lender via Ethos tip API
+      const token = await getAccessToken();
+      if (token) {
+        await tipXP(token, `x:${loan.username}`, loan.amt);
+      }
       await dbRepayLoan(loan.id);
       await refreshLoans(username);
     } catch (e) { console.error("handleRepay:", e); }
     const cp = { username: loan.username, displayName: loan.displayName, avatarUrl: loan.avatarUrl, score: loan.score };
     setRepaidLoan(cp);
     setTimeout(() => setGiftTarget(cp), 400);
+  }
+
+  async function handleSendXP(loan) {
+    try {
+      const token = await getAccessToken();
+      if (token) {
+        await tipXP(token, `x:${loan.username}`, loan.amt);
+        alert(`${loan.amt} XP sent to ${loan.displayName || loan.username}!`);
+      }
+    } catch (e) {
+      console.error("handleSendXP:", e);
+      alert("XP transfer failed: " + e.message);
+    }
   }
 
   function handleGiftClose() {
@@ -695,7 +717,7 @@ export default function App() {
             </div>
             {loans.length > 0 ? (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {loans.map(l => <LoanRow key={l.id} l={l} onRepay={handleRepay} />)}
+                {loans.map(l => <LoanRow key={l.id} l={l} onRepay={handleRepay} onSendXP={handleSendXP} />)}
               </div>
             ) : (
               <div style={{ textAlign: "center", padding: "50px 20px", background: "linear-gradient(145deg, #131320, #0c0c18)", border: "1px solid #1c1c32", borderRadius: 16 }}>

@@ -11,7 +11,7 @@ import { fetchUserByX } from "./ethos";
  * 3. We call Ethos API to get full profile by X username (score, xp, stats, etc.)
  */
 export function useEthosUser() {
-  const { ready, authenticated, user: privyUser, login, logout } = usePrivy();
+  const { ready, authenticated, user: privyUser, login, logout, getAccessToken } = usePrivy();
   const [ethosUser, setEthosUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -62,5 +62,6 @@ export function useEthosUser() {
     error,
     login,
     logout,
+    getAccessToken,
   };
 }
