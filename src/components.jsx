@@ -39,10 +39,11 @@ export function SlashBadge({ count }) {
   if (!count) return null;
   return (
     <span style={{
-      display: "inline-flex", alignItems: "center", gap: 4,
-      background: "#dc262615", border: "1px solid #dc262630",
-      borderRadius: 6, padding: "3px 8px", fontSize: 11, color: "#fca5a5", fontWeight: 600,
-    }}>⚠ {count}× slash</span>
+      display: "inline-flex", alignItems: "center", gap: 5,
+      background: "#7f1d1d18", border: "1px solid #7f1d1d40",
+      borderRadius: 6, padding: "3px 9px", fontSize: 11, color: "#f87171", fontWeight: 500,
+      letterSpacing: 0.2,
+    }}>⚠ {count} slash</span>
   );
 }
 
