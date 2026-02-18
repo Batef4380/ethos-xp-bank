@@ -79,9 +79,10 @@ export function Overlay({ open, close, children }) {
 // Shared styles
 export const lbl = { fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: 1, display: "block", marginBottom: 6 };
 export const inp = {
-  width: "100%", padding: "11px 14px", background: "#0a0a14",
-  border: "1px solid #1c1c32", borderRadius: 10, color: "#fff",
-  fontSize: 15, fontFamily: "'Space Mono', monospace", outline: "none", boxSizing: "border-box",
+  width: "100%", padding: "12px 16px", background: "#0a0a14",
+  border: "1px solid #1c1c32", borderRadius: 12, color: "#fff",
+  fontSize: 15, fontFamily: "'Space Mono', monospace", outline: "none",
+  boxSizing: "border-box", transition: "border-color 0.2s",
 };
 export const btnGreen = {
   padding: "12px 28px", background: "linear-gradient(135deg, #22c55e, #10b981)",
