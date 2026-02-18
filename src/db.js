@@ -52,6 +52,16 @@ export async function cancelOffer(offerId) {
 
 // ── Loans ───────────────────────────────────────
 
+export async function fetchLoansByOfferId(offerId) {
+  const { data, error } = await requireSupabase()
+    .from("loans")
+    .select("*")
+    .eq("offer_id", offerId)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
 export async function fetchLoans(username) {
   const { data, error } = await requireSupabase()
     .from("loans")
