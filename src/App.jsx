@@ -23,7 +23,7 @@ function LoginScreen({ onLogin, loading, error }) {
     <div style={{
       minHeight: "100vh", background: "#08080f",
       display: "flex", alignItems: "center", justifyContent: "center",
-      fontFamily: "'DM Sans', -apple-system, sans-serif",
+      fontFamily: "'Inter', -apple-system, sans-serif",
     }}>
       <div style={{ textAlign: "center", maxWidth: 420, padding: "0 24px", animation: "fadeUp 0.6s ease" }}>
         <div style={{
@@ -34,10 +34,10 @@ function LoginScreen({ onLogin, loading, error }) {
           fontFamily: "'Space Mono', monospace", boxShadow: "0 0 40px #22c55e22",
         }}>XP</div>
 
-        <h1 style={{ color: "#fff", fontSize: 32, fontWeight: 700, marginBottom: 8, fontFamily: "'Space Mono', monospace", letterSpacing: -1 }}>
+        <h1 style={{ color: "#f9fafb", fontSize: 30, fontWeight: 700, marginBottom: 10, fontFamily: "'Space Mono', monospace", letterSpacing: -1 }}>
           Ethos XP Bank
         </h1>
-        <p style={{ color: "#6b7280", fontSize: 14, lineHeight: 1.6, marginBottom: 30 }}>
+        <p style={{ color: "#9ca3af", fontSize: 15, lineHeight: 1.7, marginBottom: 32 }}>
           Reputation-backed XP lending. 0% interest. Built on trust.
         </p>
 
