@@ -71,9 +71,12 @@ export function Overlay({ open, close, children }) {
       display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
     }} onClick={close}>
       <div onClick={e => e.stopPropagation()} style={{
-        background: "linear-gradient(145deg, #151528, #0e0e1a)",
-        border: "1px solid #22c55e20", borderRadius: 20, padding: 28,
-        maxWidth: 440, width: "100%", boxShadow: "0 24px 80px rgba(0,0,0,0.6)",
+        background: "linear-gradient(160deg, #13131f, #0c0c18)",
+        border: "1px solid #1e1e32",
+        borderTop: "1px solid #2a2a42",
+        borderRadius: 22, padding: 30,
+        maxWidth: 440, width: "100%",
+        boxShadow: "0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px #ffffff06",
       }}>{children}</div>
     </div>
   );
