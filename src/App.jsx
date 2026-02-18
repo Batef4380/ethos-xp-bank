@@ -52,13 +52,13 @@ function LoginScreen({ onLogin, loading, error }) {
           disabled={loading}
           onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
           style={{
-            padding: "16px 40px",
-            background: loading ? "#1a1a2e" : (h ? "linear-gradient(135deg, #1db954, #0fa678)" : "linear-gradient(135deg, #22c55e, #10b981)"),
-            color: loading ? "#4b5563" : "#0a0a0f", border: "none", borderRadius: 14,
-            fontSize: 15, fontWeight: 700, cursor: loading ? "not-allowed" : "pointer",
-            textTransform: "uppercase", letterSpacing: 1.5,
-            boxShadow: h && !loading ? "0 0 32px #22c55e33" : "0 0 20px #22c55e18",
-            transition: "all 0.3s",
+            padding: "15px 44px",
+            background: loading ? "#161624" : (h ? "linear-gradient(135deg, #16a34a, #059669)" : "linear-gradient(135deg, #22c55e, #10b981)"),
+            color: loading ? "#4b5563" : "#071a0f", border: "none", borderRadius: 12,
+            fontSize: 14, fontWeight: 700, cursor: loading ? "not-allowed" : "pointer",
+            textTransform: "uppercase", letterSpacing: 2,
+            boxShadow: h && !loading ? "0 8px 32px #22c55e28, 0 2px 8px #0003" : "0 4px 16px #22c55e14, 0 2px 8px #0003",
+            transition: "all 0.25s ease",
             display: "inline-flex", alignItems: "center", gap: 10,
           }}
         >
