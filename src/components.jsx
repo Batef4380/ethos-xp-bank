@@ -59,7 +59,7 @@ export function Stat({ icon, label, value, sub }) {
       padding: "18px 20px", flex: "1 1 155px", minWidth: 155,
     }}>
       <div style={{ fontSize: 11, color: "#6b7280", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 10 }}>{icon} {label}</div>
-      <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", fontFamily: "'Space Mono', monospace" }}>{value}</div>
+      <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", fontFamily: "'Space Mono', monospace", lineHeight: 1.1 }}>{value}</div>
       {sub && <div style={{ fontSize: 11, color: "#4ade80", marginTop: 6 }}>{sub}</div>}
     </div>
   );
