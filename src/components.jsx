@@ -38,12 +38,14 @@ export function TierBadge({ score, name }) {
 export function SlashBadge({ count }) {
   if (!count) return null;
   return (
-    <span style={{
-      display: "inline-flex", alignItems: "center", gap: 5,
-      background: "#7f1d1d18", border: "1px solid #7f1d1d40",
-      borderRadius: 6, padding: "3px 9px", fontSize: 11, color: "#f87171", fontWeight: 500,
-      letterSpacing: 0.2,
-    }}>⚠ {count} slash</span>
+    <span
+      title={`${count} slash${count !== 1 ? "es" : ""} received on Ethos`}
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 5,
+        background: "#7f1d1d18", border: "1px solid #7f1d1d40",
+        borderRadius: 6, padding: "3px 9px", fontSize: 11, color: "#f87171", fontWeight: 500,
+        letterSpacing: 0.2, cursor: "help",
+      }}>⚠ {count} slash</span>
   );
 }
 
