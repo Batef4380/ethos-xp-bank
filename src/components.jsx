@@ -101,6 +101,6 @@ export const btnGreen = {
 export const btnGreenFull = { ...btnGreen, width: "100%", padding: "13px 0" };
 export const btnOutline = {
   flex: 1, padding: "12px 0", background: "transparent",
-  border: "1px solid #1c1c32", borderRadius: 16,
+  border: "1px solid #252540", borderRadius: 16,
   color: "#6b7280", fontSize: 13, fontWeight: 600, cursor: "pointer",
 };
