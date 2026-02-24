@@ -26,7 +26,7 @@ export function TierBadge({ score, name }) {
       fontSize: 12, fontWeight: 600, color: t.color,
       background: `${t.color}15`, border: `1px solid ${t.color}30`,
       borderRadius: 8, padding: "3px 10px", letterSpacing: 0.3,
-      cursor: name ? "pointer" : "default", transition: "all 0.2s",
+      cursor: name ? "pointer" : "default", transition: "all 0.2s", whiteSpace: "nowrap",
     }}>{t.name} · {score}</span>
   );
   if (name) {
